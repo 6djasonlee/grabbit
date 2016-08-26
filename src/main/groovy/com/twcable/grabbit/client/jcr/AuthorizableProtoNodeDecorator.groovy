@@ -2,6 +2,7 @@ package com.twcable.grabbit.client.jcr
 
 import com.twcable.grabbit.jcr.JcrNodeDecorator
 import com.twcable.grabbit.jcr.ProtoNodeDecorator
+import com.twcable.grabbit.jcr.ProtoPropertyDecorator
 import com.twcable.grabbit.security.AuthorizablePrincipal
 import com.twcable.grabbit.security.InsufficientGrabbitPrivilegeException
 import groovy.transform.CompileStatic
@@ -12,7 +13,9 @@ import org.apache.jackrabbit.api.security.user.User
 import org.apache.jackrabbit.api.security.user.UserManager
 import org.apache.jackrabbit.value.StringValue
 import org.apache.sling.jcr.base.util.AccessControlUtil
+import com.twcable.grabbit.proto.NodeProtos.Node as ProtoNode
 
+import javax.annotation.Nonnegative
 import javax.annotation.Nonnull
 import javax.jcr.Session
 import java.lang.reflect.Field
@@ -40,9 +43,14 @@ import java.lang.reflect.ReflectPermission
  * trees, and can not be written directly by a client.
  */
 @CompileStatic
-@InheritConstructors
 @Slf4j
 class AuthorizableProtoNodeDecorator extends ProtoNodeDecorator {
+
+
+    AuthorizableProtoNodeDecorator(@Nonnull ProtoNode node, @Nonnull Collection<ProtoPropertyDecorator> protoProperties) {
+        super(node, protoProperties)
+    }
+
 
     @Override
     JcrNodeDecorator writeToJcr(@Nonnull Session session) {

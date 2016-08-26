@@ -34,9 +34,9 @@ import static org.apache.jackrabbit.JcrConstants.JCR_PRIMARYTYPE
 class ProtoNodeDecorator {
 
     @Delegate
-    ProtoNode innerProtoNode
+    protected ProtoNode innerProtoNode
 
-    Collection<ProtoPropertyDecorator> protoProperties
+    protected Collection<ProtoPropertyDecorator> protoProperties
 
 
     static ProtoNodeDecorator createFrom(@Nonnull ProtoNode node) {
@@ -100,7 +100,7 @@ class ProtoNodeDecorator {
      * @param session to create or get the node path for
      * @return the newly created, or found node
      */
-    private JCRNode getOrCreateNode(Session session) {
+    JCRNode getOrCreateNode(Session session) {
         JcrUtils.getOrCreateByPath(innerProtoNode.name, primaryType, session)
     }
 
